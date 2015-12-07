@@ -49,6 +49,7 @@ EXPRESSLY ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
 int optind = 1;
 int opterr = 1;
 int optopt = '?';
+int GetOptIgnoreCase = 0;
 enum ENUM_ORDERING { REQUIRE_ORDER, PERMUTE, RETURN_IN_ORDER };
 
 //
@@ -204,7 +205,10 @@ int _getopt_internal_r_a(int argc, char *const *argv, const char *optstring, con
 		for (nameend = d->__nextchar; *nameend && *nameend != '='; nameend++);
 		namelen = (unsigned int)(nameend - d->__nextchar);
 		for (p = longopts, option_index = 0; p->name; p++, option_index++)
-			if (!strncmp(p->name, d->__nextchar, namelen))
+			if (GetOptIgnoreCase ? 
+				(  !_strnicmp(p->name, d->__nextchar, namelen) ) : 
+				(  !strncmp(p->name, d->__nextchar, namelen)   )
+				)
 			{
 				if (namelen == (unsigned int)strlen(p->name))
 				{
@@ -364,7 +368,10 @@ int _getopt_internal_r_a(int argc, char *const *argv, const char *optstring, con
 				d->optarg = argv[d->optind++];
 			for (d->__nextchar = nameend = d->optarg; *nameend && *nameend != '='; nameend++);
 			for (p = longopts, option_index = 0; p->name; p++, option_index++)
-				if (!strncmp(p->name, d->__nextchar, nameend - d->__nextchar))
+				if (GetOptIgnoreCase ? 
+					(!_strnicmp(p->name, d->__nextchar, nameend - d->__nextchar)) : 
+					(!strncmp(p->name, d->__nextchar, nameend - d->__nextchar))
+					)
 				{
 					if ((unsigned int)(nameend - d->__nextchar) == strlen(p->name))
 					{
@@ -663,7 +670,10 @@ int _getopt_internal_r_w(int argc, wchar_t *const *argv, const wchar_t *optstrin
 		for (nameend = d->__nextchar; *nameend && *nameend != L'='; nameend++);
 		namelen = (unsigned int)(nameend - d->__nextchar);
 		for (p = longopts, option_index = 0; p->name; p++, option_index++)
-			if (!wcsncmp(p->name, d->__nextchar, namelen))
+			if (GetOptIgnoreCase ?
+				(  !_wcsnicmp(p->name, d->__nextchar, namelen) ) :
+				(!wcsncmp(p->name, d->__nextchar, namelen) ) 
+				)
 			{
 				if (namelen == (unsigned int)wcslen(p->name))
 				{
@@ -823,7 +833,10 @@ int _getopt_internal_r_w(int argc, wchar_t *const *argv, const wchar_t *optstrin
 				d->optarg = argv[d->optind++];
 			for (d->__nextchar = nameend = d->optarg; *nameend && *nameend != L'='; nameend++);
 			for (p = longopts, option_index = 0; p->name; p++, option_index++)
-				if (!wcsncmp(p->name, d->__nextchar, nameend - d->__nextchar))
+				if (GetOptIgnoreCase ?
+					(!_wcsnicmp(p->name, d->__nextchar, nameend - d->__nextchar)) :
+					(!wcsncmp(p->name, d->__nextchar, nameend - d->__nextchar))
+					)
 				{
 					if ((unsigned int)(nameend - d->__nextchar) == wcslen(p->name))
 					{

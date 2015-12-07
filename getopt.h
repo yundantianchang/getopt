@@ -1,4 +1,4 @@
-  /* Getopt for Microsoft C
+/* Getopt for Microsoft C
   This code is a modification of the Free Software Foundation, Inc.
   Getopt library for parsing command line argument the purpose was
   to provide a Microsoft Visual C friendly derivative. This code
@@ -85,6 +85,8 @@
       extern _GETOPT_API int optind;
       extern _GETOPT_API int opterr;
       extern _GETOPT_API int optopt;
+	 //
+	  extern _GETOPT_API int GetOptIgnoreCase;
 
       // Ansi
       struct option_a
