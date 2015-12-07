@@ -87,7 +87,7 @@ _BEGIN_EXTERN_C
 	extern _GETOPT_API int opterr;
 	extern _GETOPT_API int optopt;
 	 //
-	  extern _GETOPT_API int GetOptIgnoreCase;
+	extern _GETOPT_API int GetOptIgnoreCase;
 
 	// Ansi
 	struct option_a
